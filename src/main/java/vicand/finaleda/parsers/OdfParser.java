@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -19,7 +20,9 @@ import vicand.finaleda.models.ParserData;
 //.odp
 public class OdfParser implements IParser {
 
-	public ParserData GetMetadata(String filePath) {
+	final static Logger logger = Logger.getLogger(OdfParser.class);
+
+	public ParserData GetData(String filePath) {
 
 		BodyContentHandler handler = new BodyContentHandler();
 		Metadata metadata = new Metadata();
