@@ -18,22 +18,20 @@ public class FileExplorerController {
 	}
 
 	public ArrayList<FileSimple> GetFilesInFolder(String path) {
-		logger.trace("Obtaining all files from <" + path + ">");
+		logger.info("Obtaining all files from <" + path + ">");
 		File file = new File(path);
+		files.clear();
 		listAllFiles(file);
 		return files;
 	}
 
-	private void listAllFiles(File folder) {
-		files.clear();
+	private void listAllFiles(File folder) {	
 		File[] fileNames = folder.listFiles();
-
 		for(File file : fileNames){
 			if (file.isDirectory()) {
 				listAllFiles(file);
 			} else {
 				files.add(new FileSimple(file));
-				//System.out.println(new FileSimple(file).toString());
 			}
 		}
 	}

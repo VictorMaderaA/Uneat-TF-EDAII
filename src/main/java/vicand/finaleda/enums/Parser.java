@@ -6,5 +6,6 @@ public enum Parser {
 	ODF,
 	PDF,
 	TEXT,
-	XML
+	XML,
+	AUTO
 }

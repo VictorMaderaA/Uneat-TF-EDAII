@@ -9,6 +9,9 @@ public class ParserFactory {
 	{
 		IParser returnValue = null;
 		switch (type) {
+		case AUTO:
+			returnValue = new AutoParser();
+			break;
 		case EXCEL:
 			returnValue = new ExcelParser();
 			break;

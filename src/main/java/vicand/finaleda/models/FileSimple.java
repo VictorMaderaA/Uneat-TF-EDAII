@@ -4,15 +4,53 @@ import java.io.File;
 
 public class FileSimple {
 
-	public String name;
-	public String path;
-	public String extension;
+	private String name;
+	private String path;
+	private String extension;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+
+
+
+	public FileSimple(String name, String path, String extension) {
+		super();
+		this.name = name;
+		this.path = path;
+		this.extension = extension;
+	}
 
 	public FileSimple(File file) {
 		name = file.getName();
 		path = file.getAbsolutePath();
 		extension = getFileExtension(file);
 	}
+
+
+
+
 
 	private static String getFileExtension(File file) {
 		String extension = "";

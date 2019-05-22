@@ -31,8 +31,7 @@ public class AppController {
 		FileExplorerController fileExplController = new FileExplorerController();
 		ArrayList<FileSimple> files = fileExplController.GetFilesInFolder(folderPath);
 
-		//https://www.edureka.co/blog/serialization-of-java-objects-to-xml-using-xmlencoder-decoder/
-		new Serializer().Serialize(files, "filesSimple");
+		new ParserController().ParseFileList(files);
 	}
 
 

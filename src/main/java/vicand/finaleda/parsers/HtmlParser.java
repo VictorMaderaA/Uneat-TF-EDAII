@@ -19,6 +19,7 @@ public class HtmlParser implements IParser{
 
 	final static Logger logger = Logger.getLogger(HtmlParser.class);
 
+	@Override
 	public ParserData GetData(String filePath) {
 		//detecting the file type
 		BodyContentHandler handler = new BodyContentHandler();
@@ -27,8 +28,7 @@ public class HtmlParser implements IParser{
 		try {
 			inputstream = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("File not found '" + filePath + "'");
 			return null;
 		}
 		ParseContext pcontext = new ParseContext();
@@ -38,17 +38,8 @@ public class HtmlParser implements IParser{
 
 		try {
 			htmlparser.parse(inputstream, handler, metadata,pcontext);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (TikaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}catch (IOException | SAXException | TikaException e) {
+			logger.warn("Could not extract text of '" + filePath + "'");
 			return null;
 		}
 

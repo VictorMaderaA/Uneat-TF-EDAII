@@ -21,6 +21,7 @@ public class PdfParser implements IParser{
 
 	final static Logger logger = Logger.getLogger(PdfParser.class);
 
+	@Override
 	public ParserData GetData(String filePath) {
 		BodyContentHandler handler = new BodyContentHandler();
 		Metadata metadata = new Metadata();
@@ -29,9 +30,7 @@ public class PdfParser implements IParser{
 		try {
 			inputstream = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e) {
-			//FileNotFound
-			e.printStackTrace();
-			//TODO - Log
+			logger.warn("File not found '" + filePath + "'");
 			return null;
 		}
 
@@ -41,17 +40,8 @@ public class PdfParser implements IParser{
 
 		try {
 			pdfparser.parse(inputstream, handler, metadata, pcontext);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (TikaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException | SAXException | TikaException e) {
+			logger.warn("Could not extract text of '" + filePath + "'");
 			return null;
 		}
 

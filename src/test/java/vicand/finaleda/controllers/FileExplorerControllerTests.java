@@ -22,8 +22,8 @@ public class FileExplorerControllerTests {
 		assertEquals(5, files.size());
 		int i = 1;
 		for (FileSimple f : files) {
-			assertEquals("text - copia (" + i + ").txt", f.name);
-			assertEquals(".txt", f.extension);
+			assertEquals("text - copia (" + i + ").txt", f.getName());
+			assertEquals(".txt", f.getExtension());
 			i++;
 		}
 

@@ -21,6 +21,7 @@ public class ExcelParser implements IParser {
 
 	final static Logger logger = Logger.getLogger(ExcelParser.class);
 
+	@Override
 	public ParserData GetData(String filePath) {
 
 		BodyContentHandler handler = new BodyContentHandler(-1);
@@ -29,8 +30,7 @@ public class ExcelParser implements IParser {
 		try {
 			inputstream = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("File not found '" + filePath + "'");
 			return null;
 		}
 		ParseContext pcontext = new ParseContext();
@@ -39,28 +39,10 @@ public class ExcelParser implements IParser {
 		OOXMLParser msofficeparser = new OOXMLParser();
 		try {
 			msofficeparser.parse(inputstream, handler, metadata, pcontext);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (TikaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException | SAXException | TikaException e) {
+			logger.warn("Could not extract text of '" + filePath + "'");
 			return null;
 		}
-
-		//		System.out.println("Contents of the document:" + handler.toString());
-		//		System.out.println("Metadata of the document:");
-		//		String[] metadataNames = metadata.names();
-		//
-		//		for (String name : metadataNames) {
-		//			System.out.println(name + ": " + metadata.get(name));
-		//		}
-
 		return new ParserData(handler, metadata);
 	}
 
