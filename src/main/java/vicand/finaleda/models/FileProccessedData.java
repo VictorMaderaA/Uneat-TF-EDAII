@@ -6,25 +6,25 @@ import java.util.Map;
 public class FileProccessedData {
 
 
-	private String fileName;
-	private String filePath;
+	private FileSimple file;
 	private Map<String, MutableInt> fileWords;
+	private int fileCountWords;
 
-	public String getFileName() {
-		return fileName;
-	}
-	public String getFilePath() {
-		return filePath;
+	public FileSimple getFile() {
+		return file;
 	}
 	public Map<String, MutableInt> getFileWords() {
 		return fileWords;
 	}
+	public int getFileCountWords() {
+		return fileCountWords;
+	}
 
-	public FileProccessedData(String fileName, String filePath, Map<String, MutableInt> fileWords) {
+	public FileProccessedData(FileSimple file, Map<String, MutableInt> fileWords, int fileCountWords) {
 		super();
-		this.fileName = fileName;
-		this.filePath = filePath;
+		this.file = file;
 		this.fileWords = fileWords;
+		this.fileCountWords = fileCountWords;
 	}
 
 

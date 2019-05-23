@@ -53,11 +53,14 @@ public class ParserController {
 
 		logger.info("Finished With Parser of File List ");
 
+		//TODO BORRAR TODO DE AQUI PARA ABAJO
+
 		for (FileProccessedData f : filesProccessedData) {
 			Iterator it = f.getFileWords().entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry<String, MutableInt> pair = (Map.Entry<String, MutableInt>)it.next();
-				System.out.println(pair.getKey() + " = " + pair.getValue().get());
+
+
 				it.remove(); // avoids a ConcurrentModificationException
 			}
 		}
@@ -72,19 +75,19 @@ public class ParserController {
 			return;
 		}
 		logger.info("--- Starting ProccesContent for file " + f.getPath());
-
-		Map<String, MutableInt> wordHash = ProccessContentWords(data.contentHandler);
+		MutableInt wordCount = new MutableInt();
+		Map<String, MutableInt> wordHash = ProccessContentWords(data.contentHandler, wordCount);
 		if(wordHash == null)
 		{
 			logger.info("word hash returned null");
 		}
-		FileProccessedData proccessedData = new FileProccessedData(f.getName(), f.getPath(), wordHash);
+		FileProccessedData proccessedData = new FileProccessedData(f, wordHash, wordCount.get());
 		filesProccessedData.add(proccessedData);
 		logger.info("--- Finished ProccesContent for file " + f.getPath());
 
 	}
 
-	private Map<String, MutableInt> ProccessContentWords(BodyContentHandler content)
+	private Map<String, MutableInt> ProccessContentWords(BodyContentHandler content, MutableInt wordCount)
 	{
 		String textContent = content.toString();
 		if (textContent.isEmpty()) {
@@ -96,6 +99,7 @@ public class ParserController {
 		Map<String, MutableInt> wordsHash = new HashMap<String, MutableInt>();
 		String[] words = textContent.split("\\s+");
 		for (int i = 0; i < words.length; i++) {
+			wordCount.increment();
 			String w = words[i] = words[i].replaceAll("[^\\w]", "");
 			MutableInt count = wordsHash.get(w);
 			if(count == null)
