@@ -26,9 +26,6 @@ public class FileExplorerControllerTests {
 			assertEquals(".txt", f.getExtension());
 			i++;
 		}
-
-
-
 	}
 
 }

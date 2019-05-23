@@ -18,13 +18,14 @@ import vicand.finaleda.models.MutableInt;
 import vicand.finaleda.models.ParserData;
 import vicand.finaleda.parsers.AutoParser;
 import vicand.finaleda.parsers.IParser;
+import vicand.finaleda.tfidf.TermFrequencyController;
 
 public class ParserController {
 
 	final static Logger logger = Logger.getLogger(ParserController.class);
 	ArrayList<FileProccessedData> filesProccessedData = new ArrayList<FileProccessedData>();
 
-	private final HashMap<String, Parser> extensionParser = new HashMap<String, Parser>(){
+	private final HashMap<String, Parser> extensionParser = new HashMap<String, Parser>() {
 		{
 			put(".doc", Parser.AUTO);
 			put(".docx", Parser.AUTO);
@@ -38,14 +39,14 @@ public class ParserController {
 			put(".txt", Parser.AUTO);
 
 			put(".html", Parser.HTML);
-			put(".odp", Parser.ODF);			
+			put(".odp", Parser.ODF);
 		}
 	};
 
-	public void ParseFileList(ArrayList<FileSimple> files)
-	{
+	public void ParseFileList(ArrayList<FileSimple> files) {
 		for (FileSimple f : files) {
-			if(!extensionParser.containsKey(f.getExtension())) continue;
+			if (!extensionParser.containsKey(f.getExtension()))
+				continue;
 
 			IParser parser = ParserFactory.GetParser(extensionParser.get(f.getExtension()));
 			ParseDataProcess(f, parser);
@@ -53,32 +54,21 @@ public class ParserController {
 
 		logger.info("Finished With Parser of File List ");
 
-		//TODO BORRAR TODO DE AQUI PARA ABAJO
+		TermFrequencyController tfc = new TermFrequencyController();
 
-		for (FileProccessedData f : filesProccessedData) {
-			Iterator it = f.getFileWords().entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry<String, MutableInt> pair = (Map.Entry<String, MutableInt>)it.next();
-
-
-				it.remove(); // avoids a ConcurrentModificationException
-			}
-		}
+		tfc.GetSerchTF(filesProccessedData);
 	}
 
-	private void ParseDataProcess(FileSimple f, IParser parser)
-	{
-		ParserData data =  parser.GetData(f.getPath());
-		if(data == null) 
-		{
+	private void ParseDataProcess(FileSimple f, IParser parser) {
+		ParserData data = parser.GetData(f.getPath());
+		if (data == null) {
 			logger.info("Will skip file " + f.getPath() + "returned null data");
 			return;
 		}
 		logger.info("--- Starting ProccesContent for file " + f.getPath());
 		MutableInt wordCount = new MutableInt();
 		Map<String, MutableInt> wordHash = ProccessContentWords(data.contentHandler, wordCount);
-		if(wordHash == null)
-		{
+		if (wordHash == null) {
 			logger.info("word hash returned null");
 		}
 		FileProccessedData proccessedData = new FileProccessedData(f, wordHash, wordCount.get());
@@ -87,28 +77,27 @@ public class ParserController {
 
 	}
 
-	private Map<String, MutableInt> ProccessContentWords(BodyContentHandler content, MutableInt wordCount)
-	{
+	private Map<String, MutableInt> ProccessContentWords(BodyContentHandler content, MutableInt wordCount) {
 		String textContent = content.toString();
 		if (textContent.isEmpty()) {
 			logger.debug("File is empty");
 			return null;
-		} 
-
+		}
 
 		Map<String, MutableInt> wordsHash = new HashMap<String, MutableInt>();
 		String[] words = textContent.split("\\s+");
 		for (int i = 0; i < words.length; i++) {
 			wordCount.increment();
 			String w = words[i] = words[i].replaceAll("[^\\w]", "");
+			if (w.isBlank())
+				continue;
 			MutableInt count = wordsHash.get(w);
-			if(count == null)
+			if (count == null)
 				wordsHash.put(w, new MutableInt());
 			else
 				count.increment();
 		}
 		return wordsHash;
 	}
-
 
 }
