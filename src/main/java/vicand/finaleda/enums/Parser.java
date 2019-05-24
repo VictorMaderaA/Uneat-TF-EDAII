@@ -1,11 +1,5 @@
 package vicand.finaleda.enums;
 
 public enum Parser {
-	EXCEL,
-	HTML,
-	ODF,
-	PDF,
-	TEXT,
-	XML,
-	AUTO
+	EXCEL, HTML, ODF, PDF, TEXT, XML, AUTO
 }

@@ -16,7 +16,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
 //.xml
-public class XmlParse implements IParser{
+public class XmlParse implements IParser {
 
 	final static Logger logger = Logger.getLogger(XmlParse.class);
 
@@ -34,8 +34,8 @@ public class XmlParse implements IParser{
 		}
 		ParseContext pcontext = new ParseContext();
 
-		//Xml parser
-		XMLParser xmlparser = new XMLParser(); 
+		// Xml parser
+		XMLParser xmlparser = new XMLParser();
 		try {
 			xmlparser.parse(inputstream, handler, metadata, pcontext);
 		} catch (IOException | SAXException | TikaException e) {

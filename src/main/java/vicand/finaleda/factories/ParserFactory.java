@@ -5,8 +5,7 @@ import vicand.finaleda.parsers.*;
 
 public class ParserFactory {
 
-	public static IParser GetParser(Parser type)
-	{
+	public static IParser GetParser(Parser type) {
 		IParser returnValue = null;
 		switch (type) {
 		case AUTO:

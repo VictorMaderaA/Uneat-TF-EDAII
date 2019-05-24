@@ -7,8 +7,7 @@ public class Calculations {
 		return r;
 	}
 
-	public double getTf_idf(int termFrequency, int numDocs)
-	{
+	public double getTf_idf(int termFrequency, int numDocs) {
 		double idf = InverseDocumentFrequency(numDocs, termFrequency);
 		double r = termFrequency * idf;
 		return r;

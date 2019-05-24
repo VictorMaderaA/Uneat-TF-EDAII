@@ -25,9 +25,9 @@ public class FileExplorerController {
 		return files;
 	}
 
-	private void listAllFiles(File folder) {	
+	private void listAllFiles(File folder) {
 		File[] fileNames = folder.listFiles();
-		for(File file : fileNames){
+		for (File file : fileNames) {
 			if (file.isDirectory()) {
 				listAllFiles(file);
 			} else {

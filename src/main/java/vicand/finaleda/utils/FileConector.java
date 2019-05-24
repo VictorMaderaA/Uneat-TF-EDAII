@@ -24,7 +24,7 @@ public class FileConector {
 	public byte WriteToFile(String fileName, String data) {
 		return WriteToFile(fileName, data, "txt");
 	}
-	
+
 	public byte WriteToFile(String fileName, String data, String fileExtension) {
 		RandomAccessFile stream = null;
 		try {
@@ -54,15 +54,14 @@ public class FileConector {
 			logger.error("IOException ", e);
 			e.printStackTrace();
 		}
-		
+
 		logger.info("Writed to file: " + fileName);
 		return 1;
 	}
-	
-	public StringBuilder ReadFile(String fileName)
-	{
+
+	public StringBuilder ReadFile(String fileName) {
 		File yourFile = new File("res\\" + fileName);
-		
+
 		InputStream is;
 		try {
 			is = new FileInputStream(yourFile);
@@ -71,7 +70,7 @@ public class FileConector {
 			return null;
 		}
 		BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-		        
+
 		String line = null;
 		try {
 			line = buf.readLine();
@@ -80,16 +79,16 @@ public class FileConector {
 			e.printStackTrace();
 		}
 		StringBuilder sb = new StringBuilder();
-		        
-		while(line != null){
-		   sb.append(line).append("\n");
-		   try {
-			line = buf.readLine();
-		} catch (IOException e) {
-			logger.error("Could not read from Line" + fileName, e);
+
+		while (line != null) {
+			sb.append(line).append("\n");
+			try {
+				line = buf.readLine();
+			} catch (IOException e) {
+				logger.error("Could not read from Line" + fileName, e);
+			}
 		}
-		}
-		        
+
 		return sb;
 	}
 

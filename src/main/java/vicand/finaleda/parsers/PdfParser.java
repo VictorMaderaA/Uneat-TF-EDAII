@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 import vicand.finaleda.models.ParserData;
 
 //.pdf
-public class PdfParser implements IParser{
+public class PdfParser implements IParser {
 
 	final static Logger logger = Logger.getLogger(PdfParser.class);
 

@@ -24,7 +24,7 @@ public class AutoParser implements IParser {
 
 	final static Logger logger = Logger.getLogger(AutoParser.class);
 
-	//https://gist.github.com/LorisBachert/7b9ac408d4564caaabef
+	// https://gist.github.com/LorisBachert/7b9ac408d4564caaabef
 	@Override
 	public ParserData GetData(String filePath) {
 		File file = new File(filePath);

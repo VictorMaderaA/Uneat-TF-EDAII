@@ -32,9 +32,6 @@ public class FileSimple {
 		this.extension = extension;
 	}
 
-
-
-
 	public FileSimple(String name, String path, String extension) {
 		super();
 		this.name = name;
@@ -47,10 +44,6 @@ public class FileSimple {
 		path = file.getAbsolutePath();
 		extension = getFileExtension(file);
 	}
-
-
-
-
 
 	private static String getFileExtension(File file) {
 		String extension = "";

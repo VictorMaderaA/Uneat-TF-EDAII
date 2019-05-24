@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import vicand.finaleda.models.FileProccessedData;
+import vicand.finaleda.models.FileSearchData;
 import vicand.finaleda.models.FileSimple;
 import vicand.finaleda.utils.Serializer;
 
@@ -18,57 +20,42 @@ public class AppController {
 
 	final static Logger logger = Logger.getLogger(AppController.class);
 
-	public void StartIndex(String folderPath)
-	{
-		if("".contentEquals(folderPath))
-		{
+	private static TermFrequencyController tfc = new TermFrequencyController();
+	private static boolean DataLoaded = false;
+
+	public static void TryToLoadSearchData() {
+		DataLoaded = tfc.TryLoadSearchHash();
+
+		if (DataLoaded)
+			logger.info("Loaded Search Data");
+		else
+			logger.info("Did not load Search Data");
+	}
+
+	public static void StartIndex(String folderPath) {
+		if (folderPath.isBlank()) {
 			logger.trace("Arg: folderPath was empty.");
 			return;
 		}
 
 		logger.info("Starting Indexing for path: " + folderPath);
 
+		// Inicializamos Controlador de archivos
 		FileExplorerController fileExplController = new FileExplorerController();
+		// Obtenemos los archivos de ña ruta especificada
 		ArrayList<FileSimple> files = fileExplController.GetFilesInFolder(folderPath);
 
-		new ParserController().ParseFileList(files);
+		// Procesamos los archivos obtenidos y los guardamos la informacion procesada
+		ArrayList<FileProccessedData> proccessedFileData = new ParserController().ParseFileList(files);
+
+		// Calculamos el tfidf de los archivos procesados
+		tfc.GetSerchTF(proccessedFileData);
+
+		DataLoaded = true;
 	}
 
-
-	public byte WriteToFile(String fileName)
-	{
-		String fileContent = "Hello Learner !! Welcome to howtodoinjava.com.";
-
-		RandomAccessFile stream = null;
-		try {
-			File yourFile = new File("res\\" + fileName + ".txt");
-			yourFile.createNewFile();
-			System.out.println(yourFile.getAbsolutePath());
-			stream = new RandomAccessFile(yourFile.getAbsolutePath(), "rw");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		}
-		catch (IOException e) { //
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		}
-		FileChannel channel = stream.getChannel();
-		byte[] strBytes = fileContent.getBytes();
-		ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
-		buffer.put(strBytes);
-		buffer.flip();
-		try {
-			channel.write(buffer);
-			stream.close();
-			channel.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 1;
+	public static ArrayList<ArrayList<FileSearchData>> Search(String searchString) {
+		return tfc.Search(searchString.toLowerCase());
 	}
 
 }

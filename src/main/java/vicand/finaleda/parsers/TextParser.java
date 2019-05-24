@@ -15,15 +15,14 @@ import org.apache.tika.parser.txt.TXTParser;
 
 import org.xml.sax.SAXException;
 
-
 //.txt
-public class TextParser implements IParser{
+public class TextParser implements IParser {
 
 	final static Logger logger = Logger.getLogger(TextParser.class);
 
 	@Override
 	public ParserData GetData(String filePath) {
-		//detecting the file type
+		// detecting the file type
 		BodyContentHandler handler = new BodyContentHandler();
 		Metadata metadata = new Metadata();
 
@@ -35,12 +34,12 @@ public class TextParser implements IParser{
 			return null;
 		}
 
-		ParseContext pcontext=new ParseContext();
+		ParseContext pcontext = new ParseContext();
 
-		//Text document parser
-		TXTParser  TexTParser = new TXTParser();
+		// Text document parser
+		TXTParser TexTParser = new TXTParser();
 		try {
-			TexTParser.parse(inputstream, handler, metadata,pcontext);
+			TexTParser.parse(inputstream, handler, metadata, pcontext);
 		} catch (IOException | SAXException | TikaException e) {
 			logger.warn("Could not extract text of '" + filePath + "'");
 			return null;

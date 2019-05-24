@@ -18,10 +18,9 @@ import vicand.finaleda.controllers.FileExplorerController;
 public class Serializer {
 
 	final static Logger logger = Logger.getLogger(Serializer.class);
-	
-	//https://www.baeldung.com/jackson-xml-serialization-and-deserialization
-	public ByteArrayOutputStream Serialize(Object data)
-	{
+
+	// https://www.baeldung.com/jackson-xml-serialization-and-deserialization
+	public ByteArrayOutputStream Serialize(Object data) {
 		XmlMapper xmlMapper = new XmlMapper();
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		try {

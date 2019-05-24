@@ -15,13 +15,13 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
 //.html
-public class HtmlParser implements IParser{
+public class HtmlParser implements IParser {
 
 	final static Logger logger = Logger.getLogger(HtmlParser.class);
 
 	@Override
 	public ParserData GetData(String filePath) {
-		//detecting the file type
+		// detecting the file type
 		BodyContentHandler handler = new BodyContentHandler();
 		Metadata metadata = new Metadata();
 		FileInputStream inputstream;
@@ -33,18 +33,17 @@ public class HtmlParser implements IParser{
 		}
 		ParseContext pcontext = new ParseContext();
 
-		//Html parser 
+		// Html parser
 		org.apache.tika.parser.html.HtmlParser htmlparser = new org.apache.tika.parser.html.HtmlParser();
 
 		try {
-			htmlparser.parse(inputstream, handler, metadata,pcontext);
-		}catch (IOException | SAXException | TikaException e) {
+			htmlparser.parse(inputstream, handler, metadata, pcontext);
+		} catch (IOException | SAXException | TikaException e) {
 			logger.warn("Could not extract text of '" + filePath + "'");
 			return null;
 		}
 
 		return new ParserData(handler, metadata);
-
 
 	}
 
