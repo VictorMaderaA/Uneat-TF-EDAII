@@ -28,12 +28,29 @@ public class SearchViewController {
 
 			path = f.getAbsolutePath();
 			String fileName = f.getName();
+			String extension = getFileExtension(f);
 
-			String[] fileResult = new String[] { fileName, path, "Temp" };
+			String[] fileResult = new String[] { fileName, path, extension };
 			resultArray.add(fileResult);
 		}
 
 		return resultArray;
 	}
+	
+	private static String getFileExtension(File file) {
+        String extension = "";
+ 
+        try {
+            if (file != null && file.exists()) {
+                String name = file.getName();
+                extension = name.substring(name.lastIndexOf("."));
+            }
+        } catch (Exception e) {
+            extension = "";
+        }
+ 
+        return extension;
+ 
+    }
 
 }
