@@ -1,9 +1,13 @@
 package vicand.finaleda.utils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -55,18 +59,38 @@ public class FileConector {
 		return 1;
 	}
 	
-	public byte[] ReadFileToByteArray(String fileName)
+	public StringBuilder ReadFile(String fileName)
 	{
-		File file = new File("res\\" + fileName);
-		byte[] fileContent = null;
+		File yourFile = new File("res\\" + fileName);
 		
+		InputStream is;
 		try {
-			fileContent = Files.readAllBytes(file.toPath());
-		} catch (IOException e) {
-			logger.error("Failed to read all bytes from file " + fileName);
+			is = new FileInputStream(yourFile);
+		} catch (FileNotFoundException e) {
+			logger.error("Could not read from file " + fileName, e);
+			return null;
 		}
-		
-		return fileContent;
+		BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+		        
+		String line = null;
+		try {
+			line = buf.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		StringBuilder sb = new StringBuilder();
+		        
+		while(line != null){
+		   sb.append(line).append("\n");
+		   try {
+			line = buf.readLine();
+		} catch (IOException e) {
+			logger.error("Could not read from Line" + fileName, e);
+		}
+		}
+		        
+		return sb;
 	}
 
 }

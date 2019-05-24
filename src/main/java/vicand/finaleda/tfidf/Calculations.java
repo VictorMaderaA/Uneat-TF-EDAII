@@ -3,8 +3,7 @@ package vicand.finaleda.tfidf;
 public class Calculations {
 
 	private double InverseDocumentFrequency(int numDocumentos, int termFreq) {
-		double x = (numDocumentos / termFreq);
-		double r = Math.log10(x + 1);
+		double r = Math.log10(1 + (numDocumentos / termFreq) + 1);
 		return r;
 	}
 
