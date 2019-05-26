@@ -18,7 +18,6 @@ import vicand.finaleda.models.SearchMap;
 import vicand.finaleda.models.WordMap;
 import vicand.finaleda.tfidf.Calculations;
 import vicand.finaleda.utils.FileConector;
-import vicand.finaleda.utils.Serializer;
 
 public class TermFrequencyController {
 

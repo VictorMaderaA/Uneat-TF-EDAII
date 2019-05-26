@@ -2,13 +2,10 @@ package vicand.finaleda.models;
 
 public class FileSearchData implements Comparable<FileSearchData> {
 
-//	private String fileName;
+
 	private String filePath;
 	private double tf_idf;
 
-//	public String getFileName() {
-//		return fileName;
-//	}
 	public String getFilePath() {
 		return filePath;
 	}

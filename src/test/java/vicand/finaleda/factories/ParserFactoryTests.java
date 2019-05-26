@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import vicand.finaleda.enums.Parser;
+import vicand.finaleda.parsers.AutoParser;
 import vicand.finaleda.parsers.ExcelParser;
 import vicand.finaleda.parsers.HtmlParser;
 import vicand.finaleda.parsers.IParser;
@@ -57,4 +58,10 @@ public class ParserFactoryTests {
 		assertEquals(XmlParse.class, parser.getClass());
 	}
 
+	@Test
+	public void GetParseAuto() 
+	{
+		IParser parser = ParserFactory.GetParser(Parser.AUTO);
+		assertEquals(AutoParser.class, parser.getClass());
+	}
 }

@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import vicand.finaleda.models.FileProccessedData;
 import vicand.finaleda.models.FileSearchData;
 import vicand.finaleda.models.FileSimple;
-import vicand.finaleda.utils.Serializer;
 
 public class AppController {
 
